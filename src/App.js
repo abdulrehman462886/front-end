@@ -18,6 +18,16 @@ function App() {
     address: "",
   });
   let { name, email, dob, address } = inputdata;
+  useEffect(()=>{
+    axios
+    .get("http://localhost:5000/get")
+    .then(function (response) {
+      // handle success
+      //let array = response.data;
+      let inputarr = response.data;
+      setInputarr([...inputarr]);
+    })
+  })
   function addrecordhandle() {
     // setInputarr([...inputarr, { name, email, dob, address }]);
     //clear the input field again
@@ -40,42 +50,12 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-      });
-    // useEffect(()=>{
-    //   axios
-    //   .get("http://localhost:5000/get")
-    //   .then(function (response) {
-    //     // handle success
-    //     let array = response.data;
-    //     let inputarr = array;
-    //     setInputarr([...inputarr]);
-    //   })
-    //   .catch(function (error) {
-    //     // handle error
-    //     console.log(error);
-    //   })
-    //   .then(function () {
-    //     // always executed
-    //   });
-    // })
-    
+      });    
     setInputdata({ name: "", email: "", dob: "", address: "" });
   }
-
-  useEffect(()=>{
-    axios
-    .get("http://localhost:5000/get")
-    .then(function (response) {
-      // handle success
-      let array = response.data;
-      let inputarr = array;
-      setInputarr([...inputarr]);
-    })
-  })
   // function to splice the previous record from that particular index
   function updateData() {
     console.log(i)
-  
     axios.put(`http://localhost:5000/update/${i}`,{
         name,email,dob,address
     })
